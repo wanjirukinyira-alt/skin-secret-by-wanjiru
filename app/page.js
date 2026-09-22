@@ -35,9 +35,9 @@ export default function Home() {
 
   return (
     <>
-      <section className="container-site py-4 sm:py-6">
-        <div className="hero-shell grid overflow-hidden rounded-[28px] lg:grid-cols-[1.02fr_.98fr]">
-          <div className="relative flex min-h-[520px] flex-col justify-center overflow-hidden px-6 py-16 sm:px-10 lg:min-h-[620px] lg:px-14">
+      <section className="py-4 sm:py-6">
+        <div className="hero-shell relative grid overflow-hidden lg:grid-cols-[1.02fr_.98fr]">
+          <div className="container-site relative z-20 flex min-h-[520px] flex-col justify-center overflow-hidden px-6 py-16 sm:px-10 lg:min-h-[620px] lg:px-14 text-white">
             <span className="soft-orb soft-orb-one" />
             <span className="soft-orb soft-orb-two" />
             <Reveal>
@@ -150,12 +150,12 @@ export default function Home() {
                 playsInline
                 poster="https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=1100&q=85"
               >
-                <source src="/videos/skin-secrets-home.mp4" type="video/mp4" />
+                <source src="/videos/wmremove-transformed.mp4" type="video/mp4" />
               </video>
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#2e2933]/35 via-transparent to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/35 bg-white/70 p-4 backdrop-blur-md sm:bottom-7 sm:left-7 sm:right-auto sm:max-w-xs">
-                <p className="brand-serif text-2xl text-[#2e2933]">Care that feels like you.</p>
-                <p className="mt-1 text-xs leading-5 text-[#6f6773]">Replace this video anytime with your own Skin Secrets product or routine footage.</p>
+              <div className="absolute bottom-5 left-5 right-5 rounded-2xl p-4 sm:bottom-7 sm:left-7 sm:right-auto sm:max-w-xs text-white">
+                <p className="brand-serif text-2xl">Care that feels like you.</p>
+                <p className="mt-1 text-xs leading-5 text-white/80">Replace this video anytime with your own Skin Secrets product or routine footage.</p>
               </div>
             </div>
           </Reveal>

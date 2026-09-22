@@ -1,7 +1,7 @@
 # Skin Secrets by Wanjiru
 
 A multi-page skincare storefront built with **Next.js + JavaScript + Tailwind CSS**.
-np## Design direction
+np ## Design direction
 
 - Sage: `#8A9A7B`
 - Lavender: `#B7A8C9`
