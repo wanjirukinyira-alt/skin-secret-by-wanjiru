@@ -7,12 +7,14 @@ import { products } from "@/data/products";
 
 export default function SearchOverlay({ open, onClose }) {
   const [query, setQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef(null);
 
   useEffect(() => {
     if (open) {
       const timer = setTimeout(() => inputRef.current?.focus(), 80);
       document.body.style.overflow = "hidden";
+      setActiveIndex(0);
       return () => clearTimeout(timer);
     }
     document.body.style.overflow = "";
@@ -22,7 +24,7 @@ export default function SearchOverlay({ open, onClose }) {
 
   const matches = useMemo(() => {
     const term = query.trim().toLowerCase();
-    if (!term) return products.slice(0, 5);
+    if (!term) return products.slice(0, 4);
     return products
       .filter((product) =>
         [product.name, product.brand, product.category, product.description]
@@ -30,60 +32,102 @@ export default function SearchOverlay({ open, onClose }) {
           .toLowerCase()
           .includes(term)
       )
-      .slice(0, 8);
+      .slice(0, 6);
   }, [query]);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((i) => Math.min(i + 1, matches.length - 1));
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((i) => Math.max(i - 1, 0));
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [open, matches.length, onClose]);
 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[80] bg-[#2e2933]/45 p-3 backdrop-blur-sm sm:p-6" onMouseDown={onClose}>
+    <div
+      className="fixed inset-0 z-[80] bg-[var(--ink)]/40 backdrop-blur-md"
+      onMouseDown={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search"
+    >
       <div
-        className="mx-auto mt-10 max-w-3xl overflow-hidden rounded-[28px] bg-[#fffaf2] shadow-2xl sm:mt-20"
-        onMouseDown={(event) => event.stopPropagation()}
+        className="mx-auto mt-24 max-w-xl px-4 sm:mt-32"
+        onMouseDown={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3 border-b border-[#e8dfec] px-5 py-4 sm:px-7">
-          <Search size={20} className="text-[#8a9a7b]" />
+        {/* Input */}
+        <div className="flex items-center gap-4 border-b border-[var(--paper-alt)]/25 pb-4">
+          <Search size={18} className="shrink-0 text-[var(--paper-alt)]/60" />
           <input
             ref={inputRef}
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search products, brands or categories..."
-            className="w-full bg-transparent py-2 text-base outline-none placeholder:text-[#8a8290]"
+            onChange={(e) => { setQuery(e.target.value); setActiveIndex(0); }}
+            placeholder="Search"
+            className="w-full bg-transparent text-lg text-[var(--paper-alt)] outline-none placeholder:text-[var(--paper-alt)]/40"
+            aria-label="Search"
           />
-          <button onClick={onClose} aria-label="Close search" className="rounded-full p-2 transition hover:bg-[#eee7f3]">
-            <X size={19} />
+          <button
+            onClick={onClose}
+            aria-label="Close search"
+            className="shrink-0 text-[var(--paper-alt)]/50 transition hover:text-[var(--paper-alt)]"
+          >
+            <X size={18} />
           </button>
         </div>
 
-        <div className="max-h-[65vh] overflow-y-auto p-4 sm:p-6">
-          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[.18em] text-[#8a9a7b]">
-            {query ? `${matches.length} result${matches.length === 1 ? "" : "s"}` : "Popular right now"}
-          </p>
-
+        {/* Results */}
+        <div className="mt-8">
           {matches.length > 0 ? (
-            <div className="grid gap-2">
-              {matches.map((product) => (
-                <Link
-                  key={product.id}
-                  href={`/products/${product.id}`}
-                  onClick={onClose}
-                  className="flex items-center gap-4 rounded-2xl p-2 transition hover:bg-[#f1ecf5]"
-                >
-                  <img src={product.image} alt="" className="h-16 w-14 rounded-xl object-cover" />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-semibold uppercase tracking-[.14em] text-[#8a9a7b]">{product.brand}</p>
-                    <p className="truncate font-medium">{product.name}</p>
-                    <p className="mt-1 text-sm text-[#6f6773]">KSh {product.price.toLocaleString()}</p>
-                  </div>
-                </Link>
+            <ul className="space-y-1">
+              {matches.map((product, index) => (
+                <li key={product.id}>
+                  <Link
+                    href={`/products/${product.id}`}
+                    onClick={onClose}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    className={`group flex items-baseline justify-between gap-6 py-3 transition-colors ${
+                      index === activeIndex
+                        ? "text-[var(--paper-alt)]"
+                        : "text-[var(--paper-alt)]/60 hover:text-[var(--paper-alt)]"
+                    }`}
+                  >
+                    <span className="brand-serif text-xl leading-tight">
+                      {product.name}
+                    </span>
+                    <span className="shrink-0 text-xs tracking-wide text-[var(--paper-alt)]/50">
+                      KSh {product.price.toLocaleString()}
+                    </span>
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           ) : (
-            <div className="rounded-2xl bg-[#f1ecf5] px-6 py-10 text-center">
-              <p className="font-medium">No products found.</p>
-              <p className="mt-2 text-sm text-[#6f6773]">Try a brand like Dove or a word like serum.</p>
-            </div>
+            <p className="py-3 text-sm text-[var(--paper-alt)]/50">
+              No matches for &ldquo;{query}&rdquo;.
+            </p>
           )}
+        </div>
+
+        {/* Quiet footer link */}
+        <div className="mt-10">
+          <Link
+            href="/shop"
+            onClick={onClose}
+            className="text-[11px] font-medium uppercase tracking-[.18em] text-[var(--paper-alt)]/50 transition hover:text-[var(--paper-alt)]"
+          >
+            Browse all products
+          </Link>
         </div>
       </div>
     </div>

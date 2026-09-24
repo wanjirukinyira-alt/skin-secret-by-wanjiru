@@ -2,6 +2,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartProvider";
+import NewsletterPopup from "@/components/NewsletterPopup";
+import FloatingActions from "@/components/FloatingActions";
 
 export const metadata = {
   title: "Skin Secrets by Wanjiru",
@@ -16,6 +18,8 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <FloatingActions />
+          <NewsletterPopup />
         </CartProvider>
       </body>
     </html>
