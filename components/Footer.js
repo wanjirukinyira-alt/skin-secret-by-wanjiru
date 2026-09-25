@@ -49,13 +49,46 @@ export default function Footer() {
 
   if (pathname === "/") {
     return (
-      <footer className="border-t border-white/10 bg-[var(--accent)] px-6 py-8 text-[10px] uppercase tracking-[.14em] text-[var(--paper-alt)]/65">
-        <div className="container-site flex flex-col items-center justify-between gap-5 sm:flex-row">
-          <img src="/logo/skin-secrets-wordmark.svg" alt="Skin Secrets by Wanjiru" className="h-auto w-32 opacity-90" />
-          <p>© {year} Skin Secrets by Wanjiru</p>
-          <div className="flex items-center gap-4">
-            <a href="#" aria-label="Instagram"><Instagram size={14} /></a>
-            <a href="mailto:hello@skinsecretsbywanjiru.com" aria-label="Email"><Mail size={14} /></a>
+      <footer className="bg-white px-6 pt-14 text-[var(--ink)] sm:pt-20">
+        <div className="container-site">
+          <div className="grid gap-12 border-b border-black/8 pb-14 sm:grid-cols-2 lg:grid-cols-[1.65fr_1fr_1fr_1fr] lg:gap-8 lg:pb-20">
+            <div className="max-w-xs">
+              <img src="/logo/skin-secrets-wordmark.svg" alt="Skin Secrets by Wanjiru" className="h-auto w-40 brightness-0 opacity-80" />
+              <p className="mt-6 text-[10px] leading-5 text-[var(--muted)]">Thoughtful skincare for rituals that feel as good as they look.</p>
+              <a href="mailto:hello@skinsecretsbywanjiru.com" className="mt-5 inline-block text-[9px] font-semibold uppercase tracking-[.14em] underline decoration-black/30 underline-offset-4 transition hover:decoration-black">Get in touch</a>
+            </div>
+
+            <div>
+              <h3 className="text-[9px] font-semibold uppercase tracking-[.16em] text-[var(--muted)]">Shop</h3>
+              <ul className="mt-5 space-y-3 text-[10px] text-[var(--ink-soft)]">
+                <li><Link href="/shop">All skincare</Link></li>
+                <li><Link href="/shop/face">Face care</Link></li>
+                <li><Link href="/shop/body">Body care</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-[9px] font-semibold uppercase tracking-[.16em] text-[var(--muted)]">Discover</h3>
+              <ul className="mt-5 space-y-3 text-[10px] text-[var(--ink-soft)]">
+                <li><Link href="/about">Our story</Link></li>
+                <li><Link href="/journal">Skin notes</Link></li>
+                <li><Link href="/faq">FAQs</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-[9px] font-semibold uppercase tracking-[.16em] text-[var(--muted)]">Customer care</h3>
+              <ul className="mt-5 space-y-3 text-[10px] text-[var(--ink-soft)]">
+                <li><Link href="/contact">Contact us</Link></li>
+                <li><Link href="/shipping">Shipping &amp; delivery</Link></li>
+                <li><Link href="/track-order">Track my order</Link></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-5 py-7 text-[8px] uppercase tracking-[.12em] text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-wrap gap-x-5 gap-y-2"><p>© {year} Skin Secrets by Wanjiru</p><Link href="/policies/privacy">Privacy</Link><Link href="/policies/terms">Terms</Link></div>
+            <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top" className="flex size-7 items-center justify-center self-end rounded-full bg-[var(--ink)] text-white transition hover:bg-[var(--accent)] sm:self-auto"><ArrowUp size={12} /></button>
           </div>
         </div>
       </footer>

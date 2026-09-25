@@ -1,12 +1,13 @@
 import { Instagram } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import ScrollZoomImage from "@/components/ScrollZoomImage";
 
 const socialImages = [
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&q=80&w=400",
+  "/images/WhatsApp Image 2026-09-23 at 15.15.39.jpeg",
+  "/images/WhatsApp Image 2026-09-23 at 15.15.41 (2).jpeg",
+  "/images/WhatsApp Image 2026-09-23 at 15.15.43 (2).jpeg",
+  "/images/WhatsApp Image 2026-09-23 at 15.15.45 (3).jpeg",
+  "/images/WhatsApp Image 2026-09-23 at 15.15.48.jpeg",
 ];
 
 export default function SocialFeed() {
@@ -33,11 +34,7 @@ export default function SocialFeed() {
           {socialImages.map((image, index) => (
             <Reveal key={image} delay={index * 100}>
               <a href="#" className="group relative block aspect-square overflow-hidden rounded-[16px]" aria-label={`View social post ${index + 1}`}>
-                <img
-                  src={image}
-                  alt="Skin Secrets social feed"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                <ScrollZoomImage src={image} alt="Skin Secrets social feed" className="size-full" />
                 <span className="absolute inset-0 flex items-center justify-center bg-[var(--accent)]/0 transition-colors duration-300 group-hover:bg-[var(--accent)]/20">
                   <Instagram size={24} className="translate-y-2 text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100" aria-hidden />
                 </span>

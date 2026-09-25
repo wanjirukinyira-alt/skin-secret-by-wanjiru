@@ -10,8 +10,8 @@ const slides = [
     title: "Beauty that",
     accent: "feels natural.",
     body: "A thoughtful collection of skincare essentials for the routine you already have.",
-    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1800&q=95",
-    position: "center 35%",
+    image: "/images/gen_9105da7762_8941c4d556761952.png",
+    position: "center",
   },
   {
     eyebrow: "Your everyday ritual",
